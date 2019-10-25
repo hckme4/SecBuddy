@@ -8,3 +8,7 @@ distribution. This tool is NOT a substitute for an actual system administrator, 
 the job- installing upates, creating backups, creating users, etc.</br>
 </br>
 On top of this, SecBuddy comes with tools to simplify setting up a firewall, creation of jailed enironments, and more.
+</br>
+</br>
+**How do I use it?**</br>
+Just clone this repo onto your system and execute the main.sh script in your terminal. You'll be greeted by a menu.
