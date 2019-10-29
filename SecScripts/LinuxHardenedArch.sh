@@ -10,12 +10,40 @@ read -r RUN_INSTALL
 
 while true
 do
-	if ["$RUN_INSTALL" == "Y"]
+	if [ "$RUN_INSTALL" == "Y" ]
 	then
 		# Because user inputted y we begin linux-hardened install
 
-		# install code here
-	elif ["$RUN_INSTALL" == "n"]
+		pacman -S linux-hardened
+
+		printf "Linux-Hardened installation complete! would you like to install additional security tools? [Y/n]: "
+		read -r ADDONS
+
+		while true
+		do
+			if [ "$ADDONS" == "Y" ]
+			then
+				#installs and enables firejail, usbguard and fail2ban
+				#firejail allows running apps in a sandbox
+				#usbguard allows USB whitelisting/blacklisting
+				#fail2ban creates login timeouts.
+				pacman -S firejail usbguard fail2ban
+			
+				#enable and start services
+				systemctl enable fail2ban
+				systemctl enable usbguard
+				systemctl start fail2ban
+				systemctl start usbguard
+			
+				printf "Install Finished, Be sure to reboot your machine to use the new kernel.\n\n"
+				exit 0
+			elif [ "$ADDONS" == "n" ]
+			then
+				printf "Install Finished, Be sure to reboot your machine to use the new kernel.\n\n"
+				exit 0
+			fi
+		done
+	elif [ "$RUN_INSTALL" == "n" ]
 	then
 		# Since user inputted n we notify user and quit the script.
 		printf "Not installing linux-hardened upon user request. Exiting........\n\n"
