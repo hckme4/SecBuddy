@@ -25,10 +25,28 @@ do
 
 		# copy old kernel config to Linux source tree to simplify installation
 		WORKINGDIR= pwd
-		cp $CONFPATH $WORKINGDIR/.config
+
+		printf "Press 1 if you would like to use your old config.\nPress 2 if you would like to generate your own\nSelect: "
+		read -r CONFIGOPT
+
+		while true
+		do
+			if [ "$CONFIGOPT" == "1" ]
+			then
+				cp $CONFPATH $WORKINGDIR/.config
+				make oldconfig
+				break
+			elif [ "$CONFIGOPT" == "2" ]
+			then
+				make menuconfig
+				break
+			else
+				printf "1 for old config, 2 for creating new via menu: "
+				read -r CONFIGOPT
+			fi
+		done
 
 		# begin compiling hardened kernel. add -j MAKEOPT to speed up compilation.
-		make oldconfig
 		make bzImage
 		make modules
 		make modules_install
