@@ -10,9 +10,9 @@ printf "Would you like to enable this feature? [Y/n]: "
 
 read -r SECLEVEL
 
-# If user inputted H, we append kernel.kptr_restrict=2 to /etc/sysctl.conf.
-# If user inputted M, we append kernel.kptr_restrict=1 to /etc/sysctl.conf.
-# If user inputted N, we exit this script.
+# If user inputted Y, we append kernel.unprivileged_bpf_disabled=1 and
+# net.core.bpf_jit_harden=2 to /etc/sysctl.conf.
+# If user inputted n, we exit this script.
 
 while true
 do

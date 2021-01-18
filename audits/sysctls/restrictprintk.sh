@@ -9,21 +9,20 @@ printf "Would you like to harden the kernel log? [Y/n]: "
 
 read -r SECLEVEL
 
-# If user inputted H, we append kernel.kptr_restrict=2 to /etc/sysctl.conf.
-# If user inputted M, we append kernel.kptr_restrict=1 to /etc/sysctl.conf.
-# If user inputted N, we exit this script.
+# If user inputted Y, we append kernel.printk=3 3 3 3 to /etc/sysctl.conf.
+# If user inputted n, we exit this script.
 
 while true
 do
 	if [ "$SECLEVEL" == "Y" ]
 	then
-		# Since user inputted "H" we append kernel.kptr_restrict=2
+		# Since user inputted "Y" we append kernel.printk=3 3 3 3
 		sed -i '/kernel.printk=*/d' /etc/sysctl.conf;
 		echo "kernel.printk=3 3 3 3" >> /etc/sysctl.conf;
 		exit 0;
 	elif [ "$SECLEVEL" == "n" ]
 	then
-		# Since user inputted "N" we ensure this option doesn't exist
+		# Since user inputted "n" we ensure this option doesn't exist
 		# in /etc/sysctl.conf and exit.
 		sed -i '/kernel.printk=*/d' /etc/sysctl.conf;
 		exit 0;

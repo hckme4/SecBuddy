@@ -8,9 +8,8 @@ printf "Would you like to restrict the kernel log? [Y/n]: "
 
 read -r SECLEVEL
 
-# If user inputted H, we append kernel.kptr_restrict=2 to /etc/sysctl.conf.
-# If user inputted M, we append kernel.kptr_restrict=1 to /etc/sysctl.conf.
-# If user inputted N, we exit this script.
+# If user inputted Y, we append kernel.kptr_restrict=2 to /etc/sysctl.conf.
+# If user inputted n, we exit this script.
 
 while true
 do
@@ -18,7 +17,7 @@ do
 	then
 		# Since user inputted "Y" we append kernel.kptr_restrict=2
 		sed -i '/kernel.dmesg_restrict*/d' /etc/sysctl.conf;
-		echo "kernel.kptr_restrict=1" >> /etc/sysctl.conf;
+		echo "kernel.dmesg_restrict=1" >> /etc/sysctl.conf;
 		exit 0;
 	elif [ "$SECLEVEL" == "n" ]
 	then
